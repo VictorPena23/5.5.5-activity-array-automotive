@@ -1,46 +1,65 @@
 //this includes the vehicle class as a module
-import { Vehicle } from "./vehicle.js";
+const VehicleModule = require("./vehicleBaseClass")
 
-class car extends Vehicle {
-  constructor(make, model, year, color, mileage) {
-    super(make, model, year, color, mileage);
-    this.passenger = 0;
-    this.maximumPassengers = 5;
-    this.numberOfWheels = 4;
-    this.maximumSpeed = 160;
-    this.fuel = 10;
-    this.Service = false;
-  }
-  loadPassenger(num) {
-    // if passenger less than maximumPassengers then availableRoom == true
-    this.passenger = num;
-    if (this.passenger < this.maximumPassengers) {
-      console.log("There is available room for more passenger(s).");
-      return this.passenger;
-    } else {
-      console.log("Passenger capacity has been reached!");
+//this shows how to call from this module...
+let v = new VehicleModule.Vehicle("Mecury", "Sedan", "1965", "color", "mileage");
+console.log(v.make)
+
+
+const VehicleModule = require('./vehicle').Vehicle
+
+ //info from table
+class car extends vehicleModule {
+    constructor(make, model, year, color, mileage) {
+        super(make, model, year, color, mileage);
+        this.maxPassengers = 5;
+        this.passenger = 0;
+        this.numberOfWheels = 4;
+        this.maxSpeed = 160;
+        this.fuel = 10;
+        this.scheduleService = false;
     }
-  }
-  start() {
-    // if fuel is greater than 0, then start == true
-    if (this.fuel > 0) {
-      console.log("Your vehicle engine has started!");
-      return this.started == true;
-    } else {
-      console.log("Please add fuel to your vehicle");
+// table has 
+    scheduleService() {
+        if (this.mileage > 30000) {            
+            this.scheduleService = true
+            return this.scheduleService;                       
+        }
     }
-  }
-  scheduleService(mileage) {
-    // if mileage is greater than 30000, time for maintenance == true
-    this.mileage = mileage;
-    if (this.mileage > 30000) {
-      console.log("It is time for vehicle maintenance!");
-      this.service = true;
-      return this.service;
-    } else {
-      console.log("Your vehicle is in good shape.");
+
+    start() {
+        if (this.fuel > 0) {            
+            console.log("engine has started.");
+            return this.started = true
+        } else {
+            console.log("no fuel");
+            return this.started = false;
+        }
     }
-  }
+
+    loadPassenger(num) {
+        if (this.passenger < this.maxPassengers) {
+            if ((num + this.passenger) <= this.maxPassengers) {
+                this.passenger = num;
+                return this.passenger;               
+            } else {
+                console.log(this.model + " " + this.make + " not have enough space to take all passengers.");
+
+            }
+        } else {
+            console.log(this.model + " " + this.make + " is full");
+        }
+    }
+
+
 }
 
-// let myCar = new car("pontiac", "grand prix", "2001", "silver", 100000);
+
+let myCar = new Car('mercury', 'rad_sedan', '2002', 'white', 50000)
+
+myCar.start()
+myCar.loadPassenger(5)
+myCar.stop()
+myCar.checkService()
+
+console.log(myCar)
